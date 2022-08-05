@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { tokenThunk } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +13,12 @@ class Login extends React.Component {
       nome: '',
       email: '',
     };
+  }
+
+  handleClick = async () => {
+    const { loginDispatch, history } = this.props;
+    await loginDispatch();
+    history.push('/game');
   }
 
   validarBtn() {
@@ -61,6 +70,7 @@ class Login extends React.Component {
           type="button"
           data-testid="btn-play"
           disabled={ validad }
+          onClick={ this.handleClick }
         >
           Play
         </button>
@@ -69,4 +79,14 @@ class Login extends React.Component {
     );
   }
 }
-export default Login;
+
+const mapDispatchToProps = (dispatch) => ({
+  loginDispatch: () => dispatch(tokenThunk()),
+});
+
+Login.propTypes = {
+  loginDispatch: PropTypes.func,
+  history: PropTypes.object,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(Login);
