@@ -1,8 +1,8 @@
 const INITIAL_STATE = {
-  name: nome,
-  assertions: número,
-  score: pontuação,
-  gravatarEmail: email,
+  name: '',
+  assertions: 0,
+  score: 0,
+  gravatarEmail: '',
 };
 
 function myReducer(state = INITIAL_STATE, action) {
