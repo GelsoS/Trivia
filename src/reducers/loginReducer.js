@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   gravatarEmail: '',
 };
 
-function myReducer(state = INITIAL_STATE, action) {
+function loginReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case 'NEW_ACTION':
     return {
@@ -16,4 +16,4 @@ function myReducer(state = INITIAL_STATE, action) {
   }
 }
 
-export default myReducer;
+export default loginReducer;
