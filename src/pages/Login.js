@@ -1,5 +1,7 @@
 import React from 'react';
+import { func, shape } from 'prop-types';
 import { connect } from 'react-redux';
+import { tokenThunk } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -11,6 +13,12 @@ class Login extends React.Component {
       name: '',
       email: '',
     };
+  }
+
+  handleClick = async () => {
+    const { loginDispatch, history } = this.props;
+    await loginDispatch();
+    history.push('/game');
   }
 
   validarBtn() {
@@ -36,7 +44,9 @@ class Login extends React.Component {
   }
 
   render() {
-    const { validad, email, name } = this.state;
+    const { validad, email, nome } = this.state;
+    const { history } = this.props;
+
     return (
       <form>
         <label htmlFor="nome">
@@ -44,8 +54,8 @@ class Login extends React.Component {
             value={ name }
             name="nome"
             type="text"
-            data-testid="input-player-name"
             onChange={ this.handleChange }
+            data-testid="input-player-name"
           />
         </label>
 
@@ -62,16 +72,33 @@ class Login extends React.Component {
           type="button"
           data-testid="btn-play"
           disabled={ validad }
+          onClick={ this.handleClick }
         >
           Play
         </button>
-
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => history.push('/settings') }
+        >
+          Settings
+        </button>
       </form>
     );
   }
 }
 
+
+Login.propTypes = {
+  loginDispatch: func,
+  history: shape({
+    push: func,
+  }),
+}.isRequired;
+
 const mapDispatchToProps = (dispatch) => ({
+  loginDispatch: () => dispatch(tokenThunk()),
   dispatchPlayerInfo: (playload) => dispatch(userInfoAction(playload)),
 });
+
 export default connect(null, mapDispatchToProps)(Login);
