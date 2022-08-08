@@ -1,5 +1,8 @@
 import React from 'react';
+// import PropTypes from 'prop-types';
 import { func, shape } from 'prop-types';
+import { connect } from 'react-redux';
+import { tokenThunk } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -11,6 +14,12 @@ class Login extends React.Component {
       nome: '',
       email: '',
     };
+  }
+
+  handleClick = async () => {
+    const { loginDispatch, history } = this.props;
+    await loginDispatch();
+    history.push('/game');
   }
 
   validarBtn() {
@@ -46,6 +55,7 @@ class Login extends React.Component {
             value={ nome }
             name="nome"
             type="text"
+            onChange={ this.handleChange }
             data-testid="input-player-name"
           />
         </label>
@@ -80,9 +90,14 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
+  loginDispatch: func,
   history: shape({
     push: func,
   }),
 }.isRequired;
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  loginDispatch: () => dispatch(tokenThunk()),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
