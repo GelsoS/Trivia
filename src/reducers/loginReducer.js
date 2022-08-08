@@ -15,6 +15,7 @@ function loginReducer(state = INITIAL_STATE, action) {
       email: action.email,
       name: action.name,
     };
+
   default:
     return state;
   }
