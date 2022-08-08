@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class Login extends React.Component {
   constructor() {
@@ -7,16 +8,16 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       validad: true,
-      nome: '',
+      name: '',
       email: '',
     };
   }
 
   validarBtn() {
-    const { nome, email } = this.state;
+    const { name, email } = this.state;
     const cinco = 5;
     const verifyEmail = (/\S+@\S+\.\S+/).test(email);
-    if (nome.length > cinco && verifyEmail) {
+    if (name.length > cinco && verifyEmail) {
       this.setState({
         validad: false,
       });
@@ -35,12 +36,12 @@ class Login extends React.Component {
   }
 
   render() {
-    const { validad, email, nome } = this.state;
+    const { validad, email, name } = this.state;
     return (
       <form>
         <label htmlFor="nome">
           <input
-            value={ nome }
+            value={ name }
             name="nome"
             type="text"
             data-testid="input-player-name"
@@ -69,4 +70,8 @@ class Login extends React.Component {
     );
   }
 }
-export default Login;
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchPlayerInfo: (playload) => dispatch(userInfoAction(playload)),
+});
+export default connect(null, mapDispatchToProps)(Login);
