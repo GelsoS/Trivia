@@ -23,6 +23,7 @@ function loginReducer(state = INITIAL_STATE, action) {
       ...state,
       email: action.payload,
     };
+
   default:
     return state;
   }
