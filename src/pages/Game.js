@@ -7,6 +7,8 @@ class Game extends React.Component {
     super();
     this.obterPerguntas = this.obterPerguntas.bind(this);
     this.clickResponse = this.clickResponse.bind(this);
+    this.temporizador = this.temporizador.bind(this);
+    this.disable = this.disable.bind(this);
     this.state = {
       index: 0,
       categoria: '',
@@ -15,24 +17,27 @@ class Game extends React.Component {
       buttons: [],
       incorrectStyle: '',
       correctStyle: '',
+      disabled: false,
+      tempo: 30,
     };
   }
 
   componentDidMount() {
     this.obterPerguntas();
+    this.temporizador();
   }
 
-  shuffleArray= (arr) => {
-    // refer: https://www.horadecodar.com.br/2021/05/10/como-embaralhar-um-array-em-javascript-shuffle/
+  shuffleArray= (buttons) => {
+    // refer: https://www.horadecodar.com.br/2021/05/10/como-embaralhar-um-buttonsay-em-javascript-shuffle/
     // Loop em todos os elementos
-    for (let i = arr.length - 1; i > 0; i -= 1) {
+    for (let i = buttons.length - 1; i > 0; i -= 1) {
       // Escolhendo elemento aleatório
       const j = Math.floor(Math.random() * (i + 1));
       // Reposicionando elemento
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+      [buttons[i], buttons[j]] = [buttons[j], buttons[i]];
     }
-    // Retornando array com aleatoriedade
-    return arr;
+    // Retornando buttonsay com aleatoriedade
+    this.setState({ buttons });
   }
 
   clickResponse() {
@@ -68,26 +73,51 @@ class Game extends React.Component {
       question: results[index].question,
       buttons: [results[index].correct_answer, ...results[index].incorrect_answers],
     });
+    const { buttons } = this.state;
+    this.shuffleArray(buttons);
+  }
+
+  disable() {
+    const { tempo, disabled } = this.state;
+    if (tempo === 0) {
+      this.setState({ disabled: true });
+    }
+    if (disabled) {
+      clearInterval(this.timerID);
+      this.setState({ tempo: 0 });
+    }
+  }
+
+  temporizador() {
+    const segundo = 1000;
+    const cinco = 5000;
+    setTimeout(() => {
+      this.timerID = setInterval(() => {
+        this.setState((prev) => ({
+          tempo: prev.tempo - 1,
+        }), this.disable);
+      }, segundo);
+    }, cinco);
   }
 
   render() {
-    const { categoria, question, correct, buttons, incorrectStyle,
-      correctStyle } = this.state;
-    const arr = this.shuffleArray(buttons);
+    const { categoria, question, correct, incorrectStyle,
+      correctStyle, disabled, tempo, buttons } = this.state;
     return (
       <div>
         <Header />
         <h3 data-testid="question-category">{categoria}</h3>
         <p data-testid="question-text">{question}</p>
-
+        <h3>{tempo}</h3>
         <div
           data-testid="answer-options"
         >
 
-          {arr.map((botao, index) => (
+          {buttons.map((botao, index) => (
             <button
               type="button"
               key={ index }
+              disabled={ disabled }
               style={ { border: botao === correct
                 ? correctStyle
                 : incorrectStyle } }
