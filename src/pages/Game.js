@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Header from '../components/Header';
 
 class Game extends React.Component {
   constructor() {
@@ -65,28 +66,31 @@ class Game extends React.Component {
     console.log('random  ', this.shuffleArray(buttons));
     const arr = this.shuffleArray(buttons);
     return (
-      <div>
-        <h3 data-testid="question-category">{categoria}</h3>
-        <p data-testid="question-text">{question}</p>
+      <>
+        <Header />
+        <div>
+          <h3 data-testid="question-category">{categoria}</h3>
+          <p data-testid="question-text">{question}</p>
 
-        <div
-          data-testid="answer-options"
-        >
+          <div
+            data-testid="answer-options"
+          >
 
-          {arr.map((botao, index) => (
-            <button
-              type="button"
-              key={ index }
-              data-testid={ botao === correct
-                ? 'correct-answer'
-                : `wrong-answer-${index}` }
-            >
-              {botao}
-            </button>
-          ))}
+            {arr.map((botao, index) => (
+              <button
+                type="button"
+                key={ index }
+                data-testid={ botao === correct
+                  ? 'correct-answer'
+                  : `wrong-answer-${index}` }
+              >
+                {botao}
+              </button>
+            ))}
+          </div>
+
         </div>
-
-      </div>
+      </>
     );
   }
 }

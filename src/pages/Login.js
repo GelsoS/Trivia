@@ -1,31 +1,35 @@
 import React from 'react';
 import { func, shape } from 'prop-types';
 import { connect } from 'react-redux';
-import { tokenThunk } from '../actions';
+import { tokenThunk, playerAction, playerEmailAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
+    this.state = {
+      name: '',
+      email: '',
+      validad: true,
+    };
+
     this.validarBtn = this.validarBtn.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      validad: true,
-      nome: '',
-      email: '',
-    };
   }
 
   handleClick = async () => {
-    const { loginDispatch, history } = this.props;
+    const { name, email } = this.state;
+    const { loginDispatch, playerDispatch, playerEmailDispatch, history } = this.props;
     await loginDispatch();
+    playerDispatch(name);
+    playerEmailDispatch(email);
     history.push('/game');
   }
 
   validarBtn() {
-    const { nome, email } = this.state;
+    const { name, email } = this.state;
     const cinco = 5;
     const verifyEmail = (/\S+@\S+\.\S+/).test(email);
-    if (nome.length > cinco && verifyEmail) {
+    if (name.length > cinco && verifyEmail) {
       this.setState({
         validad: false,
       });
@@ -44,16 +48,17 @@ class Login extends React.Component {
   }
 
   render() {
-    const { validad, email, nome } = this.state;
+    const { validad, email, name } = this.state;
     const { history } = this.props;
 
     return (
       <form>
-        <label htmlFor="nome">
+        <label htmlFor="name">
           <input
-            value={ nome }
-            name="nome"
+            value={ name }
+            name="name"
             type="text"
+            placeholder="digite seu nome"
             onChange={ this.handleChange }
             data-testid="input-player-name"
           />
@@ -64,6 +69,7 @@ class Login extends React.Component {
             value={ email }
             name="email"
             type="email"
+            placeholder="digite seu email"
             onChange={ this.handleChange }
             data-testid="input-gravatar-email"
           />
@@ -97,6 +103,8 @@ Login.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   loginDispatch: () => dispatch(tokenThunk()),
+  playerDispatch: (payload) => dispatch(playerAction(payload)),
+  playerEmailDispatch: (payload) => dispatch(playerEmailAction(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
