@@ -1,7 +1,7 @@
 import React from 'react';
 import { func, shape } from 'prop-types';
 import { connect } from 'react-redux';
-import { tokenThunk, playerAction, playerEmailAction } from '../actions';
+import { tokenThunk, playerAction, playerEmailAction } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
