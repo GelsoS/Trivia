@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 
 class Feedback extends Component {
   // componentDidMount = () => {
@@ -8,7 +9,10 @@ class Feedback extends Component {
 
   render() {
     return (
-      <div data-testid="feedback-text"><h1>Feedback</h1></div>
+      <>
+        <Header />
+        <div data-testid="feedback-text"><h1>Feedback</h1></div>
+      </>
     );
   }
 }
