@@ -46,6 +46,24 @@ class Game extends React.Component {
     this.setState({ buttons });
   }
 
+  handleNextBtn = async () => {
+    const { index } = this.state;
+    const { history } = this.props;
+    this.setState({
+      index: index + 1,
+      tempo: 30,
+      disabled: false,
+      correctStyle: '',
+      incorrectStyle: '',
+    });
+    const THREE = 3;
+    if (index > THREE) {
+      history.push('/feedback');
+    } else {
+      await this.obterPerguntas();
+    }
+  }
+
   calculoPontos() {
     const dez = 10;
     const { tempo } = this.state;
@@ -133,6 +151,14 @@ class Game extends React.Component {
   }
 
   render() {
+    const buttonNext = (
+      <button
+        type="button"
+        data-testid="btn-next"
+        onClick={ this.handleNextBtn }
+      >
+        Next
+      </button>);
     const { categoria, question, correct, incorrectStyle,
       correctStyle, disabled, tempo, buttons, nextBtnValidate } = this.state;
     return (
@@ -162,7 +188,8 @@ class Game extends React.Component {
             </button>
           ))}
           {
-            nextBtnValidate && <button type="button" data-testid="btn-next">Next</button>
+            nextBtnValidate
+            && buttonNext
           }
         </div>
 
