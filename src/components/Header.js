@@ -4,21 +4,8 @@ import { connect } from 'react-redux';
 import { MD5 } from 'crypto-js';
 
 class Header extends Component {
-  constructor() {
-    super();
-    this.state = {
-      score: 0,
-    };
-  }
-
-  // componentDidMount = () => {
-  //   const { gravatarAPI } = this.props;
-  //   gravatarAPI();
-  // }
-
   render() {
-    const { score } = this.state;
-    const { name, email } = this.props;
+    const { name, email, score } = this.props;
     return (
       <header>
         <div>
@@ -45,11 +32,13 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   name: state.loginReducer.name,
   email: state.loginReducer.email,
+  score: state.player.score,
 });
 
 Header.propTypes = {
   name: propTypes.string.isRequired,
   email: propTypes.string.isRequired,
+  score: propTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
