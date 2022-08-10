@@ -1,4 +1,4 @@
-import fetchTokenAPI from '../services/newTokenAPI';
+import fetchTokenAPI from '../../services/newTokenAPI';
 
 export const NEW_TOKEN = 'NEW_TOKEN';
 export const NEW_PLAYER = 'NEW_PLAYER';

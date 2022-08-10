@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { scoreAction } from '../actions';
+import { scoreAction } from '../redux/actions';
 
 class Game extends React.Component {
   constructor() {
