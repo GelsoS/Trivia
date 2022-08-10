@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { scoreAction } from '../actions';
 
 class Game extends React.Component {
   constructor() {
@@ -9,8 +11,11 @@ class Game extends React.Component {
     this.clickResponse = this.clickResponse.bind(this);
     this.temporizador = this.temporizador.bind(this);
     this.disable = this.disable.bind(this);
+    this.disable = this.disable.bind(this);
+    this.calculoPontos = this.calculoPontos.bind(this);
     this.state = {
       index: 0,
+      difficulty: '',
       categoria: '',
       question: '',
       correct: '',
@@ -41,9 +46,29 @@ class Game extends React.Component {
     this.setState({ buttons });
   }
 
-  clickResponse() {
-    // const atribute = [target];
-    // const resposta = atribute[0].dataset.testid;
+  calculoPontos() {
+    const dez = 10;
+    const { tempo } = this.state;
+
+    const pontos = dez + tempo * this.level();
+    return pontos;
+  }
+
+  level() {
+    const tres = 3;
+    const dois = 2;
+    const um = 1;
+    const { difficulty } = this.state;
+    if (difficulty === 'hard') {
+      return tres;
+    } if (difficulty === 'medium') {
+      return dois;
+    } return um;
+  }
+
+  clickResponse({ target }) {
+    const { pontos } = this.props;
+    const resposta = [target][0].dataset.testid;
     const correctStyle = ' 3px solid rgb(6, 240, 15)';
     const incorrectStyle = '3px solid red';
     this.setState({
@@ -51,6 +76,10 @@ class Game extends React.Component {
       incorrectStyle,
       nextBtnValidate: true,
     });
+    this.calculoPontos();
+    if (resposta === 'correct-answer') {
+      pontos(this.calculoPontos());
+    }
   }
 
   async obterPerguntas() {
@@ -68,8 +97,9 @@ class Game extends React.Component {
     }
     const { index } = this.state;
     const { results } = perguntas;
-
+    // console.log(results);
     this.setState({
+      difficulty: results[index].difficulty,
       correct: results[index].correct_answer,
       categoria: results[index].category,
       question: results[index].question,
@@ -144,4 +174,7 @@ Game.propTypes = {
   history: PropTypes.object,
 }.isRequired;
 
-export default Game;
+const mapDispatchToProps = (dispatch) => ({
+  pontos: (p) => dispatch(scoreAction(p)),
+});
+export default connect(null, mapDispatchToProps)(Game);

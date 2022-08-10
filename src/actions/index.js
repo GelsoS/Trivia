@@ -29,3 +29,8 @@ export const tokenThunk = () => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const scoreAction = (payload) => ({
+  type: 'score',
+  payload,
+});
