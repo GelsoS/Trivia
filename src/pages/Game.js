@@ -19,6 +19,7 @@ class Game extends React.Component {
       correctStyle: '',
       disabled: false,
       tempo: 30,
+      nextBtnValidate: false,
     };
   }
 
@@ -48,6 +49,7 @@ class Game extends React.Component {
     this.setState({
       correctStyle,
       incorrectStyle,
+      nextBtnValidate: true,
     });
   }
 
@@ -102,7 +104,7 @@ class Game extends React.Component {
 
   render() {
     const { categoria, question, correct, incorrectStyle,
-      correctStyle, disabled, tempo, buttons } = this.state;
+      correctStyle, disabled, tempo, buttons, nextBtnValidate } = this.state;
     return (
       <div>
         <Header />
@@ -129,6 +131,9 @@ class Game extends React.Component {
               {botao}
             </button>
           ))}
+          {
+            nextBtnValidate && <button type="button" data-testid="btn-next">Next</button>
+          }
         </div>
 
       </div>
