@@ -192,7 +192,6 @@ class Game extends React.Component {
             && buttonNext
           }
         </div>
-
       </div>
     );
   }
