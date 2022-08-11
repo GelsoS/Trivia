@@ -22,4 +22,16 @@ class Feedback extends Component {
 //   email: state.loginReducer.email,
 // });
 
-export default Feedback;
+const mapStateToProps = (state) => ({
+  assertions: state.player.assertions,
+//   email: state.loginReducer.email,
+//   score: state.player.score,
+});
+
+Feedback.propTypes = {
+  assertions: propTypes.number.isRequired,
+//   email: propTypes.string.isRequired,
+//   score: propTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps)(Feedback);
