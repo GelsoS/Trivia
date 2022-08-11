@@ -7,10 +7,11 @@ class Feedback extends Component {
     super();
     this.rankingClick = this.rankingClick.bind(this);
   }
-  // componentDidMount = () => {
-  //   const { gravatarAPI } = this.props;
-  //   gravatarAPI();
-  // }
+
+  playAgainBtn = () => {
+    const { history } = this.props;
+    history.push('/');
+  }
 
   rankingClick() {
     const { history: { push } } = this.props;
@@ -21,7 +22,14 @@ class Feedback extends Component {
     return (
       <div data-testid="feedback-text">
         <Header />
-        <div data-testid="feedback-text"><h1>Feedback</h1></div>
+        <button
+          type="button"
+          data-testid="btn-play-again"
+          onClick={ this.playAgainBtn }
+        >
+          Play Again
+
+        </button>
         <button
           data-testid="btn-ranking"
           type="button"
@@ -36,13 +44,7 @@ class Feedback extends Component {
 }
 
 Feedback.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
+  history: PropTypes.object,
+}.isRequired;
 
-// const mapStateToProps = (state) => ({
-//   name: state.loginReducer.name,
-//   email: state.loginReducer.email,
-// });
 export default Feedback;
