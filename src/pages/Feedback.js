@@ -22,7 +22,6 @@ class Feedback extends Component {
     return (
       <div data-testid="feedback-text">
         <Header />
-        <div data-testid="feedback-text"><h1>Feedback</h1></div>
         <button
           type="button"
           data-testid="btn-play-again"
