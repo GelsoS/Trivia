@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 class Ranking extends Component {
     goHome = () => {
-      const { history } = this.props;
-      history.push('/');
+      const { history: { push } } = this.props;
+      push('/');
     }
 
     render() {
@@ -23,6 +23,8 @@ class Ranking extends Component {
     }
 }
 Ranking.propTypes = {
-  history: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 export default Ranking;

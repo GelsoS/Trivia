@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Header from '../components/Header';
 
 class Feedback extends Component {
   constructor() {
@@ -19,7 +20,8 @@ class Feedback extends Component {
   render() {
     return (
       <div data-testid="feedback-text">
-        <h1>Feedback</h1>
+        <Header />
+        <div data-testid="feedback-text"><h1>Feedback</h1></div>
         <button
           data-testid="btn-ranking"
           type="button"
