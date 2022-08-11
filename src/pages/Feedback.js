@@ -3,14 +3,24 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Feedback extends Component {
+  constructor() {
+    super();
+    this.rankingClick = this.rankingClick.bind(this);
+  }
+
   playAgainBtn = () => {
     const { history } = this.props;
     history.push('/');
   }
 
+  rankingClick() {
+    const { history: { push } } = this.props;
+    push('/ranking');
+  }
+
   render() {
     return (
-      <>
+      <div data-testid="feedback-text">
         <Header />
         <div data-testid="feedback-text"><h1>Feedback</h1></div>
         <button
@@ -21,7 +31,15 @@ class Feedback extends Component {
           Play Again
 
         </button>
-      </>
+        <button
+          data-testid="btn-ranking"
+          type="button"
+          onClick={ this.rankingClick }
+        >
+          Ranking
+        </button>
+      </div>
+
     );
   }
 }
