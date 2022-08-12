@@ -201,6 +201,6 @@ Game.propTypes = {
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
-  pontos: (p) => dispatch(scoreAction(p)),
+  pontos: (p, assertions) => dispatch(scoreAction(p, assertions)),
 });
 export default connect(null, mapDispatchToProps)(Game);
