@@ -12,6 +12,12 @@ function player(state = INITIAL_STATE, action) {
       score: state.score + action.payload,
       assertions: state.assertions + 1,
     };
+  case 'zerar':
+    return {
+      ...state,
+      score: action.payload,
+      assertions: action.payload,
+    };
   default:
     return state;
   }

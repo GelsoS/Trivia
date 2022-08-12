@@ -34,3 +34,8 @@ export const scoreAction = (payload) => ({
   type: 'score',
   payload,
 });
+
+export const zerar = (payload) => ({
+  type: 'zerar',
+  payload,
+});

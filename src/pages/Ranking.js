@@ -2,25 +2,67 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Ranking extends Component {
-    goHome = () => {
-      const { history: { push } } = this.props;
-      push('/');
-    }
+  constructor() {
+    super();
+    this.recuperaLocalstorage = this.recuperaLocalstorage.bind(this);
+    this.state = {
+      ranking: [],
+    };
+  }
 
-    render() {
-      return (
-        <div data-testid=" btn-ranking">
-          <h1 data-testid="ranking-title">Ranking</h1>
-          <button
-            type="button"
-            data-testid="btn-go-home"
-            onClick={ this.goHome }
-          >
-            Inicio
-          </button>
-        </div>
-      );
+  componentDidMount() {
+    this.recuperaLocalstorage();
+  }
+
+  goHome = () => {
+    const { history: { push } } = this.props;
+    push('/');
+  }
+
+  recuperaLocalstorage() {
+    const arr = JSON.parse(localStorage.getItem('ranking'));
+    console.log(arr);
+    if (arr !== undefined && arr.length > 0) {
+      arr.sort((a, b) => b.score - a.score);
+      this.setState({
+        ranking: arr,
+      });
+    } else {
+      this.setState({
+        ranking: arr,
+      });
     }
+    console.log(arr[0]);
+  }
+
+  render() {
+    const { ranking } = this.state;
+    console.log(ranking);
+    return (
+      <div data-testid=" btn-ranking">
+        <h1 data-testid="ranking-title">Ranking</h1>
+
+        { ranking.map((param, i) => (
+          <div key={ i }>
+            <img src={ param.gravatar } key={ param.gravatar } alt="gravatar" />
+            <h4 data-testid={ `player-name-${i}` }>{param.name}</h4>
+            <p data-testid={ `player-score-${i}` }>
+              Score:
+              {param.score}
+            </p>
+          </div>
+        ))}
+
+        <button
+          type="button"
+          data-testid="btn-go-home"
+          onClick={ this.goHome }
+        >
+          Inicio
+        </button>
+      </div>
+    );
+  }
 }
 Ranking.propTypes = {
   history: PropTypes.shape({
