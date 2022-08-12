@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import { zerar } from '../redux/actions';
 
 class Feedback extends Component {
   constructor() {
@@ -10,12 +11,14 @@ class Feedback extends Component {
   }
 
   playAgainBtn = () => {
-    const { history } = this.props;
+    const { history, zeraScore } = this.props;
+    zeraScore(0);
     history.push('/');
   }
 
   rankingClick() {
-    const { history: { push } } = this.props;
+    const { history: { push }, zeraScore } = this.props;
+    zeraScore(0);
     push('/ranking');
   }
 
@@ -64,10 +67,14 @@ const mapStateToProps = (state) => ({
   score: state.player.score,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  zeraScore: (p) => dispatch(zerar(p)),
+});
+
 Feedback.propTypes = {
   history: PropTypes.object,
   assertions: PropTypes.number,
   score: PropTypes.number,
 }.isRequired;
 
-export default connect(mapStateToProps)(Feedback);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);

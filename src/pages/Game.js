@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { MD5 } from 'crypto-js';
 import Header from '../components/Header';
 import { scoreAction } from '../redux/actions';
 
@@ -48,7 +49,8 @@ class Game extends React.Component {
 
   handleNextBtn = async () => {
     const { index } = this.state;
-    const { history } = this.props;
+    const { history, name, score, email } = this.props;
+    const gravatar = `https://www.gravatar.com/avatar/${MD5(email).toString()}`;
     this.setState({
       index: index + 1,
       tempo: 30,
@@ -58,6 +60,15 @@ class Game extends React.Component {
     });
     const THREE = 3;
     if (index > THREE) {
+      const obj = JSON.parse(localStorage.getItem('ranking'));
+      console.log(obj);
+      if (obj !== null) {
+        const arrayRanking = [...obj, { name, score, gravatar }];
+        localStorage.setItem('ranking', JSON.stringify(arrayRanking));
+      } else {
+        const ranking = [{ name, score, gravatar }];
+        localStorage.setItem('ranking', JSON.stringify(ranking));
+      }
       history.push('/feedback');
     } else {
       await this.obterPerguntas();
@@ -115,7 +126,6 @@ class Game extends React.Component {
     }
     const { index } = this.state;
     const { results } = perguntas;
-    // console.log(results);
     this.setState({
       difficulty: results[index].difficulty,
       correct: results[index].correct_answer,
@@ -200,7 +210,14 @@ Game.propTypes = {
   history: PropTypes.object,
 }.isRequired;
 
+const mapStateToProps = (state) => ({
+  name: state.loginReducer.name,
+  email: state.loginReducer.email,
+  token: state.loginReducer.token,
+  score: state.player.score,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   pontos: (p, assertions) => dispatch(scoreAction(p, assertions)),
 });
-export default connect(null, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
