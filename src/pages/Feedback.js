@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { zerar } from '../redux/actions';
+import '../styles/feedback.css';
 
 class Feedback extends Component {
   constructor() {
@@ -27,35 +28,44 @@ class Feedback extends Component {
     return (
       <div data-testid="feedback-text">
         <Header />
-        <div data-testid="feedback-text"><h1>Feedback</h1></div>
-        <div>
-          Acertos:
-          <p data-testid="feedback-total-question">{assertions}</p>
-        </div>
-        <div>
-          Placar Final:
-          <p data-testid="feedback-total-score">{score}</p>
-        </div>
-        <p>
-          {
-            assertions > 2 ? 'Well Done!' : 'Could be better...'
-          }
-        </p>
-        <button
-          type="button"
-          data-testid="btn-play-again"
-          onClick={ this.playAgainBtn }
-        >
-          Play Again
+        <div data-testid="feedback-text" className="feedback">
+          <h1>Feedback</h1>
 
-        </button>
-        <button
-          data-testid="btn-ranking"
-          type="button"
-          onClick={ this.rankingClick }
-        >
-          Ranking
-        </button>
+          Acertos:
+          <p data-testid="feedback-total-question">
+            {assertions}
+          </p>
+
+          Placar Final:
+          <p data-testid="feedback-total-score">
+            {score}
+          </p>
+
+          <p>
+            {
+              assertions > 2 ? 'Well Done!' : 'Could be better...'
+            }
+          </p>
+          <div>
+            <button
+              className="button"
+              type="button"
+              data-testid="btn-play-again"
+              onClick={ this.playAgainBtn }
+            >
+              Play Again
+
+            </button>
+            <button
+              className="button"
+              data-testid="btn-ranking"
+              type="button"
+              onClick={ this.rankingClick }
+            >
+              Ranking
+            </button>
+          </div>
+        </div>
       </div>
 
     );

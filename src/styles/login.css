@@ -1,0 +1,77 @@
+html {
+
+  --font-title: georgia , 'Times New Roman' , times , serif;
+
+  --font-size: 1rem;
+
+  --color: #19f;
+
+  --color-light: #adf;
+
+  --color-dark: #018;
+
+  --radius: 0.2rem;
+}
+
+body {
+  background-image: url('des.jpg');
+  background-size: cover;
+}
+
+.form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.input {
+  background: rgb(243, 234, 234);
+  border: 1px solid #ccc;
+  font-family: var(--font);
+  font-size: var(--font-size);
+  margin: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  transition: 1s;
+  width: 200px;
+}
+
+.button {
+  background: var(--color);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--color-dark);
+  font-family: var(--font);
+  font-size: var(--font-size);
+  margin-top: 5px;
+  padding: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 1s;
+  width: 230px;
+}
+
+.input:focus {
+  background: white;
+  border-color: var(--color);
+  box-shadow: 0 0 0 3px var(--color-light);
+  outline: none;
+}
+
+
+.button:hover, .button:focus {
+  background: var(--color);
+  box-shadow: 0 0 0 3px var(--color-light) , 0 0 0 4px var(--color);
+  outline: none;
+}
+
+.button:active {
+  box-shadow: 0 0 0 3px var(--color) , 0 0 0 4px var(--color);
+}
+
+.button:disabled {
+  opacity: 0.5;
+}
+

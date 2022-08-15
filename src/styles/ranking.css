@@ -1,0 +1,28 @@
+.ranking {
+  align-items: center;
+  background-image: url('ranking.jpg');
+  background-size: cover;
+  color: mediumblue;
+  display: flex;
+  flex-direction: column;
+  font-size: x-large;
+  height: 100vh;
+  text-align: center;
+  width: 100vw;
+
+  /* -webkit-background-size: contain; */
+
+  /* -moz-background-size: contain; */
+
+  /* background-size: contain; */
+
+  /* -o-background-size: contain; */
+}
+
+.result {
+  background-color: rgb(158, 247, 217);
+  border: solid 2px blue;
+  border-radius: 5px;
+  margin: 5px;
+  width: 250px;
+}

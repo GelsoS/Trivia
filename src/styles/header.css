@@ -1,0 +1,12 @@
+.div {
+  align-items: center;
+  background: linear-gradient(120deg, #dfedf3, #3be8ff, #2196f3, green);
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+
+img {
+  width: 50px;
+}

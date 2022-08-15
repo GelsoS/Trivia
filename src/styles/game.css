@@ -1,0 +1,49 @@
+.game {
+  align-items: center;
+  color: blue;
+  display: flex;
+  flex-direction: column;
+  font-size: x-large;
+}
+
+.tempo {
+  align-items: center;
+  background-color: black;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  font-size: x-large;
+  font-weight: 900;
+  height: 50px;
+  justify-content: center;
+  text-align: center;
+  width: 50px;
+}
+
+.button {
+  border: none;
+  color: var(--color-dark);
+  font-family: var(--font);
+  font-size: var(--font-size);
+  margin: 10px;
+  padding: 5px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  width: 100px;
+}
+
+.next {
+  background: blueviolet;
+  border: none;
+  border-radius: var(--radius);
+  color: white;
+  font-family: var(--font);
+  font-size: var(--font-size);
+  margin: 10px;
+  padding: 25px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  width: 100px;
+}
