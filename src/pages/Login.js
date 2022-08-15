@@ -2,6 +2,7 @@ import React from 'react';
 import { func, shape } from 'prop-types';
 import { connect } from 'react-redux';
 import { tokenThunk, playerAction, playerEmailAction } from '../redux/actions';
+import '../styles/login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -52,9 +53,10 @@ class Login extends React.Component {
     const { history } = this.props;
 
     return (
-      <form>
+      <form className="form">
         <label htmlFor="name">
           <input
+            className="input"
             value={ name }
             name="name"
             type="text"
@@ -66,6 +68,7 @@ class Login extends React.Component {
 
         <label htmlFor="email">
           <input
+            className="input"
             value={ email }
             name="email"
             type="email"
@@ -75,6 +78,7 @@ class Login extends React.Component {
           />
         </label>
         <button
+          className="button"
           type="button"
           data-testid="btn-play"
           disabled={ validad }
@@ -83,6 +87,7 @@ class Login extends React.Component {
           Play
         </button>
         <button
+          className="button"
           type="button"
           data-testid="btn-settings"
           onClick={ () => history.push('/settings') }

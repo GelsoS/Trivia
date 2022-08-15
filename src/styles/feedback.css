@@ -1,0 +1,31 @@
+.feedback {
+  background-image: url('game.jpg');
+  color: mediumblue;
+  display: flex;
+  flex-direction: column;
+  font-size: x-large;
+  margin-left: 30%;
+  text-align: center;
+  width: 600px;
+}
+
+
+.feedback :nth-child( 4 ) {
+  color: red;
+  font-weight: 800;
+  text-shadow: 0.2em 0.2em 0.05em green;
+  text-transform: uppercase;
+}
+
+.button {
+  border: none;
+  color: var(--color-dark);
+  font-family: var(--font);
+  font-size: var(--font-size);
+  margin: 10px;
+  padding: 5px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  width: 100px;
+}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { MD5 } from 'crypto-js';
 import Header from '../components/Header';
 import { scoreAction } from '../redux/actions';
+import '../styles/game.css';
 
 class Game extends React.Component {
   constructor() {
@@ -11,7 +12,6 @@ class Game extends React.Component {
     this.obterPerguntas = this.obterPerguntas.bind(this);
     this.clickResponse = this.clickResponse.bind(this);
     this.temporizador = this.temporizador.bind(this);
-    this.disable = this.disable.bind(this);
     this.disable = this.disable.bind(this);
     this.calculoPontos = this.calculoPontos.bind(this);
     this.state = {
@@ -58,10 +58,11 @@ class Game extends React.Component {
       correctStyle: '',
       incorrectStyle: '',
     });
+    clearTimeout(this.timerID);
+    clearInterval(this.timerID);
     const THREE = 3;
     if (index > THREE) {
       const obj = JSON.parse(localStorage.getItem('ranking'));
-      console.log(obj);
       if (obj !== null) {
         const arrayRanking = [...obj, { name, score, gravatar }];
         localStorage.setItem('ranking', JSON.stringify(arrayRanking));
@@ -72,6 +73,7 @@ class Game extends React.Component {
       history.push('/feedback');
     } else {
       await this.obterPerguntas();
+      this.temporizador();
     }
   }
 
@@ -104,11 +106,14 @@ class Game extends React.Component {
       correctStyle,
       incorrectStyle,
       nextBtnValidate: true,
+      disabled: true,
     });
     this.calculoPontos();
     if (resposta === 'correct-answer') {
       pontos(this.calculoPontos());
     }
+    clearTimeout(this.timerID);
+    clearInterval(this.timerID);
   }
 
   async obterPerguntas() {
@@ -151,7 +156,7 @@ class Game extends React.Component {
   temporizador() {
     const segundo = 1000;
     const cinco = 5000;
-    setTimeout(() => {
+    this.timerID = setTimeout(() => {
       this.timerID = setInterval(() => {
         this.setState((prev) => ({
           tempo: prev.tempo - 1,
@@ -163,6 +168,7 @@ class Game extends React.Component {
   render() {
     const buttonNext = (
       <button
+        className="next"
         type="button"
         data-testid="btn-next"
         onClick={ this.handleNextBtn }
@@ -174,33 +180,36 @@ class Game extends React.Component {
     return (
       <div>
         <Header />
-        <h3 data-testid="question-category">{categoria}</h3>
-        <p data-testid="question-text">{question}</p>
-        <h3>{tempo}</h3>
-        <div
-          data-testid="answer-options"
-        >
+        <div className="game">
+          <h3 data-testid="question-category">{categoria}</h3>
+          <p data-testid="question-text">{question}</p>
+          <h3 className="tempo">{tempo}</h3>
+          <div
+            data-testid="answer-options"
+          >
 
-          {buttons.map((botao, index) => (
-            <button
-              type="button"
-              key={ index }
-              disabled={ disabled }
-              style={ { border: botao === correct
-                ? correctStyle
-                : incorrectStyle } }
-              onClick={ this.clickResponse }
-              data-testid={ botao === correct
-                ? 'correct-answer'
-                : `wrong-answer-${index}` }
-            >
-              {botao}
-            </button>
-          ))}
-          {
-            nextBtnValidate
+            {buttons.map((botao, index) => (
+              <button
+                className="button"
+                type="button"
+                key={ index }
+                disabled={ disabled }
+                style={ { border: botao === correct
+                  ? correctStyle
+                  : incorrectStyle } }
+                onClick={ this.clickResponse }
+                data-testid={ botao === correct
+                  ? 'correct-answer'
+                  : `wrong-answer-${index}` }
+              >
+                {botao}
+              </button>
+            ))}
+            {
+              nextBtnValidate
             && buttonNext
-          }
+            }
+          </div>
         </div>
       </div>
     );
